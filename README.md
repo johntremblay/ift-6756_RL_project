@@ -1,2 +1,2 @@
-# ift-6756_RL_project
-Repository for a course's project: IFT 6756 - Game Theory and Machine Learning at UdeM
+# IFT 6756 - Game theory and Machine learning course's project
+This repository is for Game theory's course project. Our goal is to implement the Alpha Zero algorithm in order to play Santorini (full information) and Stratego (missing information) games. 
