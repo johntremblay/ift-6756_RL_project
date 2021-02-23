@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/alphazero" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alphazero/chesspy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alphazero/docker" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alphazero/old_code" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alphazero/othello" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alphazero/pretrained_models" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alphazero/pytorch_classification" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Python 3.8 (speechbrain)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
