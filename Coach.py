@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 class Coach():
     """
     This class executes the self-play + learning. It uses the functions defined
-    in Game and NeuralNet. args are specified in main.py.
+    in Game and NeuralNet. args are specified in main_.py.
     """
 
     def __init__(self, game, nnet, args):
@@ -53,15 +53,17 @@ class Coach():
         while True:
             episodeStep += 1
             canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer)
+            print(board)
             temp = int(episodeStep < self.args.tempThreshold)
 
-            pi = self.mcts.getActionProb(canonicalBoard, temp=temp)
+            pi = self.mcts.getActionProb(canonicalBoard, obj_board=board, temp=temp)
             sym = self.game.getSymmetries(canonicalBoard, pi)
             for b, p in sym:
                 trainExamples.append([b, self.curPlayer, p, None])
 
             action = np.random.choice(len(pi), p=pi)
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
+            board = board.mirror()
 
             r = self.game.getGameEnded(board, self.curPlayer)
 

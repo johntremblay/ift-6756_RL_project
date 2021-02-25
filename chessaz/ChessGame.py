@@ -67,7 +67,7 @@ class ChessGame(Game):
             nextPlayer: player who plays in the next turn (should be -player)
         """
         # TODO remove assert not required part for speed
-        assert libPlayerToChessPlayer(board.turn) == player
+        # assert libPlayerToChessPlayer(board.turn) == player
         move = self.all_possible_moves[action]
         if not board.turn:  # black move from CanonicalForm
             move = str(mirror_action(chess.Move.from_uci(move)))
@@ -75,7 +75,8 @@ class ChessGame(Game):
         if move not in getAllowedMovesFromBoard(board): # must be a pawn promotion
             # print(board)
             # print(move, " is not valid - ",self.all_possible_moves[action])
-            move=move+self.all_possible_moves[action][-1:]
+            move = move+self.all_possible_moves[action][-1:]
+            move = move
             # print("moveupdated:",move)
         board = board.copy()
         board.push(chess.Move.from_uci(move))
@@ -93,7 +94,7 @@ class ChessGame(Game):
                         0 for invalid moves
         """
         # TODO remove assert not required part for speed
-        assert libPlayerToChessPlayer(board.turn) == player
+        # assert libPlayerToChessPlayer(board.turn) == player
         current_allowed_moves = np.array(getAllowedMovesFromBoard(board))
         # TODO find a better way
         validMoves = np.isin(np.array(self.all_possible_moves), current_allowed_moves).astype(int)
@@ -137,11 +138,13 @@ class ChessGame(Game):
                             the colors and return the board.
         """
         # TODO remove assert not required part for speed
-        assert libPlayerToChessPlayer(board.turn) == player
+        # assert libPlayerToChessPlayer(board.turn) == player
         if player == 1:
-            return board
+            output = self.toArray(board)
+            return output
         else:
-            return board.mirror()
+            output = self.toArray(board.mirror())
+            return output
 
     def getSymmetries(self, board, pi):
         """
@@ -187,7 +190,10 @@ def mirror_action(action):
 
 
 def getAllowedMovesFromBoard(board):
-    return [move.uci() for move in board.legal_moves]
+    output = []
+    for move in board.legal_moves:
+        output.append(move.uci())
+    return output
 
 
 # reverse the fen representation as if black is white and vice-versa
