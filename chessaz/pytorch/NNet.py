@@ -112,7 +112,7 @@ class NNetWrapper(NeuralNet):
         """
         # timing
         start = time.time()
-
+        print("im in predict NN")
         # preparing input
         board = torch.FloatTensor(board.astype(np.float64))
         if args.cuda: board = board.contiguous().cuda()

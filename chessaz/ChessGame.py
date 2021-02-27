@@ -53,6 +53,7 @@ class ChessGame(Game):
         Returns:
             actionSize: number of all possible actions
         """
+        print("iom in get action size")
         return len(self.all_possible_moves)
 
     def getNextState(self, board, player, action):
@@ -67,6 +68,7 @@ class ChessGame(Game):
             nextPlayer: player who plays in the next turn (should be -player)
         """
         # TODO remove assert not required part for speed
+        print("im in get next state")
         # assert libPlayerToChessPlayer(board.turn) == player
         move = self.all_possible_moves[action]
         if not board.turn:  # black move from CanonicalForm
@@ -93,6 +95,7 @@ class ChessGame(Game):
                         moves that are valid from the current board and player,
                         0 for invalid moves
         """
+        print("im in get valid move")
         # TODO remove assert not required part for speed
         # assert libPlayerToChessPlayer(board.turn) == player
         current_allowed_moves = np.array(getAllowedMovesFromBoard(board))
@@ -113,6 +116,7 @@ class ChessGame(Game):
                small non-zero value for draw.
 
         """
+        print("im in game ended")
         r = board.result()
         if r == "1-0":
             return player
@@ -138,6 +142,7 @@ class ChessGame(Game):
                             the colors and return the board.
         """
         # TODO remove assert not required part for speed
+        print("im in get canoical form")
         # assert libPlayerToChessPlayer(board.turn) == player
         if player == 1:
             output = self.toArray(board)
@@ -169,6 +174,7 @@ class ChessGame(Game):
                          Required by MCTS for hashing.
         """
         # TODO maybe player move matters?
+        print('im in string representation')
         fen = board.fen()
         # l = fen.rindex(' ', fen.rindex(' '))
         # return fen[0:l]
