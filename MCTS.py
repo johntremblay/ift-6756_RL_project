@@ -1,6 +1,6 @@
 import logging
 import math
-
+import copy
 import numpy as np
 
 EPS = 1e-8
@@ -35,7 +35,9 @@ class MCTS():
                    proportional to Nsa[(s,a)]**(1./temp)
         """
         for i in range(self.args.numMCTSSims):
-            self.search(canonicalBoard, obj_board)
+            canonicalBoard_search = copy.deepcopy(canonicalBoard)
+            obj_board_search = copy.deepcopy(obj_board)
+            self.search(canonicalBoard_search, obj_board_search)
 
         s = self.game.stringRepresentation(obj_board)
         counts = [self.Nsa[(s, a)] if (s, a) in self.Nsa else 0 for a in range(self.game.getActionSize())]
