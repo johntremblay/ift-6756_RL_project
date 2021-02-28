@@ -80,8 +80,8 @@ class ChessGame(Game):
             move = move+self.all_possible_moves[action][-1:]
             move = move
             # print("moveupdated:",move)
-        board = board.copy()
         board.push(chess.Move.from_uci(move))
+        
         return (board, -player)
 
     def getValidMoves(self, board, player):

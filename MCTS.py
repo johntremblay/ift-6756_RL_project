@@ -123,11 +123,14 @@ class MCTS():
                     best_act = a
 
         a = best_act
+        # print(obj_board)
         next_s_obj, next_player = self.game.getNextState(obj_board, 1, a)
         # print(next_s_obj)
         next_s = self.game.getCanonicalForm(next_s_obj, next_player)
         # print(next_s_obj.mirror())
-        v = self.search(next_s, next_s_obj.mirror())
+        next_s_obj.apply_mirror()
+        # print(next_s_obj)
+        v = self.search(next_s, next_s_obj)
 
         if (s, a) in self.Qsa:
             self.Qsa[(s, a)] = (self.Nsa[(s, a)] * self.Qsa[(s, a)] + v) / (self.Nsa[(s, a)] + 1)
