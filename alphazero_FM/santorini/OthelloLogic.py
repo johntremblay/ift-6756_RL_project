@@ -72,9 +72,10 @@ class Board():
         return False
 
     def is_legal_move(self, x_sum, y_sum, color):
-        if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0):
-            if self[x_sum][y_sum] != color:
-                return True
+        # boundaries
+        if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0) and \
+                (self[x_sum][y_sum] != -color):
+            return True
         return False
 
     def remove_color(self, color):
