@@ -28,6 +28,7 @@ class OthelloGame(Game):
         # (a,b) tuple
         return (self.n, self.n)
 
+    # SANTORINI: Done
     def getActionSize(self):
         # return number of actions
         return self.n*self.n + 1
@@ -43,6 +44,7 @@ class OthelloGame(Game):
         b.execute_move(move, player)
         return (b.pieces, -player)
 
+    # SANTORINI: In Progress
     def getValidMoves(self, board, player):
         # return a fixed size binary vector
         valids = [0]*self.getActionSize()
@@ -56,6 +58,7 @@ class OthelloGame(Game):
             valids[self.n*x+y]=1
         return np.array(valids)
 
+    # SANTORINI: In Progress
     def getGameEnded(self, board, player):
         # return 0 if not ended, 1 if player 1 won, -1 if player 1 lost
         # player = 1
@@ -63,8 +66,8 @@ class OthelloGame(Game):
         b.pieces = np.copy(board)
         if b.has_legal_moves(player):
             return 0
-        if b.has_legal_moves(-player):
-            return 0
+        # if b.has_legal_moves(-player):
+        #     return 0
         if b.countDiff(player) > 0:
             return 1
         return -1

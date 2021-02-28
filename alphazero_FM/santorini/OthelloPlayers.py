@@ -1,6 +1,7 @@
 import numpy as np
 
 
+# SANTORINI: IN PROGRESS
 class RandomPlayer():
     def __init__(self, game):
         self.game = game
