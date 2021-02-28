@@ -174,7 +174,6 @@ class ChessGame(Game):
                          Required by MCTS for hashing.
         """
         # TODO maybe player move matters?
-        print('im in string representation')
         fen = board.fen()
         # l = fen.rindex(' ', fen.rindex(' '))
         # return fen[0:l]
