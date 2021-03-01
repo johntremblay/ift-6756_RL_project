@@ -4,6 +4,7 @@ import sys
 from collections import deque
 from pickle import Pickler, Unpickler
 from random import shuffle
+import collections
 
 import numpy as np
 from tqdm import tqdm
@@ -52,19 +53,22 @@ class Coach():
 
         while True:
             episodeStep += 1
-            canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer)
-
+            canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer) # This is good, return depending on the payer
+            print('---------coach-------------')
+            print(board)
             temp = int(episodeStep < self.args.tempThreshold)
 
-            pi = self.mcts.getActionProb(canonicalBoard, obj_board=board, temp=temp)
+            pi = self.mcts.getActionProb(canonicalBoard, obj_board=board, player=self.curPlayer, temp=temp) # To check it returns what
             sym = self.game.getSymmetries(canonicalBoard, pi)
             for b, p in sym:
                 trainExamples.append([b, self.curPlayer, p, None])
 
+            to_validate = self.game.getValidMoves(board, self.curPlayer)
             action = np.random.choice(len(pi), p=pi)
+            assert to_validate[action] == 1
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
-            self.curPlayer *= -1
-            board.apply_mirror()
+
+            # board.apply_mirror()
 
             r = self.game.getGameEnded(board, self.curPlayer)
 

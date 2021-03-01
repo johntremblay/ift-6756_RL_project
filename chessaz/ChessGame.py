@@ -69,17 +69,22 @@ class ChessGame(Game):
         """
         # TODO remove assert not required part for speed
         # print("im in get next state")
-        # assert libPlayerToChessPlayer(board.turn) == player
+        assert libPlayerToChessPlayer(board.turn) == player
         move = self.all_possible_moves[action]
-        if not board.turn:  # black move from CanonicalForm
-            move = str(mirror_action(chess.Move.from_uci(move)))
+        # if not board.turn:  # black move from CanonicalForm
+        #     move = str(mirror_action(chess.Move.from_uci(move)))
 
         if move not in getAllowedMovesFromBoard(board): # must be a pawn promotion
+            print('######################################')
+            print(board)
+            print('######################################')
+            move = getAllowedMovesFromBoard(board)[0]
             # print(board)
             # print(move, " is not valid - ",self.all_possible_moves[action])
-            move = move+self.all_possible_moves[action][-1:]
-            move = move
-            # print("moveupdated:",move)
+            # TODO: REMOVED THE BELOW
+            # move = move+self.all_possible_moves[action][-1:]
+            # move = move
+
         the_move = chess.Move.from_uci(move)
         board.push(the_move)
 
@@ -118,8 +123,7 @@ class ChessGame(Game):
 
         """
         # print("im in game ended")
-        a = board.fullmove_number
-        r = board.result()
+        r = board.result(claim_draw=True)
         if r == "1-0":
             return player
         elif r == "0-1":
@@ -165,6 +169,12 @@ class ChessGame(Game):
                        is used when training the neural network from examples.
         """
         return [(board, pi)]
+
+    @staticmethod
+    def init_from_position(board_input):
+        str_board = board_input.fen()
+        board = chess.Board(str_board)
+        return board
 
     def stringRepresentation(self, board):
         """
