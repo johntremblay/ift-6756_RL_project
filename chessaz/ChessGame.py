@@ -80,8 +80,9 @@ class ChessGame(Game):
             move = move+self.all_possible_moves[action][-1:]
             move = move
             # print("moveupdated:",move)
-        board.push(chess.Move.from_uci(move))
-        
+        the_move = chess.Move.from_uci(move)
+        board.push(the_move)
+
         return (board, -player)
 
     def getValidMoves(self, board, player):
@@ -117,6 +118,7 @@ class ChessGame(Game):
 
         """
         # print("im in game ended")
+        a = board.fullmove_number
         r = board.result()
         if r == "1-0":
             return player

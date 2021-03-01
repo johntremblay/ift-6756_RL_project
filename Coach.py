@@ -53,7 +53,7 @@ class Coach():
         while True:
             episodeStep += 1
             canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer)
-            # print(board)
+
             temp = int(episodeStep < self.args.tempThreshold)
 
             pi = self.mcts.getActionProb(canonicalBoard, obj_board=board, temp=temp)
@@ -62,16 +62,10 @@ class Coach():
                 trainExamples.append([b, self.curPlayer, p, None])
 
             action = np.random.choice(len(pi), p=pi)
-            # print(self.curPlayer)
-            # print(board)
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
-            # print(self.curPlayer)
-            # print('------------')
-            # print(board)
             self.curPlayer *= -1
             board.apply_mirror()
-            # print(self.curPlayer)
-            # print(board)
+
             r = self.game.getGameEnded(board, self.curPlayer)
 
             if r != 0:
