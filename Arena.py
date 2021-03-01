@@ -52,7 +52,7 @@ class Arena():
             if curPlayer != (1 if board.turn else -1):
                 print(1)
             board, curPlayer = self.game.getNextState(board, curPlayer, action)
-            print(board)
+            # print(board)
             # board = board.mirror()
         a = self.game.getGameEnded(board, curPlayer)
         return curPlayer * self.game.getGameEnded(board, curPlayer)

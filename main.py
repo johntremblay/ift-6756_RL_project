@@ -18,7 +18,7 @@ args = dotdict({
     'cpuct': 1,
 
     'checkpoint': '/home/john/PycharmProjects/ift-6756_RL_project/training/',
-    'load_model': True,
+    'load_model': False,
     'load_folder_file': ('/home/john/PycharmProjects/ift-6756_RL_project/checkpoint/', 'checkpoint.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 
