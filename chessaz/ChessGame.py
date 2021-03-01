@@ -75,9 +75,9 @@ class ChessGame(Game):
         #     move = str(mirror_action(chess.Move.from_uci(move)))
 
         if move not in getAllowedMovesFromBoard(board): # must be a pawn promotion
-            print('######################################')
-            print(board)
-            print('######################################')
+            # print('######################################')
+            # print(board)
+            # print('######################################')
             move = getAllowedMovesFromBoard(board)[0]
             # print(board)
             # print(move, " is not valid - ",self.all_possible_moves[action])
@@ -129,6 +129,7 @@ class ChessGame(Game):
         elif r == "0-1":
             return -player
         elif r == "1/2-1/2":
+            return 0.001  # TODO how small is better?
             return 0.001  # TODO how small is better?
         else:
             return 0
