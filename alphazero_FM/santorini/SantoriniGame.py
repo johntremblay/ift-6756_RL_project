@@ -2,10 +2,10 @@ from __future__ import print_function
 import sys
 sys.path.append('..')
 from Game import Game
-from .OthelloLogic import Board
+from .SantoriniLogic import Board
 import numpy as np
 
-class OthelloGame(Game):
+class SantoriniGame(Game):
     # SANTORINI: Done
     square_content = {
         -31: "3-X",
@@ -105,7 +105,7 @@ class OthelloGame(Game):
     #TODO: Major work here
     def getSymmetries(self, board, pi):
         # mirror, rotational
-        assert(len(pi) == self.n**4+1)  # 1 for pass
+        assert(len(pi) == self.n**4)  # 1 for pass
         pi_board = np.reshape(pi[:-1], (self.n, self.n))
         l = []
 
@@ -128,12 +128,6 @@ class OthelloGame(Game):
         board_s = "".join(self.square_content[square] for row in board for square in row)
         return board_s
 
-    # SANTORINI: TODO
-    def getScore(self, board, player):
-        b = Board(self.n)
-        b.pieces = np.copy(board)
-        return 0
-
     # SANTORINI: Done
     @staticmethod
     def display(board):
@@ -147,7 +141,7 @@ class OthelloGame(Game):
             print(y, "|", end="")    # print the row #
             for x in range(n):
                 piece = board[y][x]    # get the piece to print
-                print(OthelloGame.square_content[piece], end=" ")
+                print(SantoriniGame.square_content[piece], end=" ")
             print("|")
 
         print("------------------------")
