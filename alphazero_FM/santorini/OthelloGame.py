@@ -11,15 +11,16 @@ class OthelloGame(Game):
         -31: "3-X",
         -21: "2-X",
         -11: "1-X",
-        -1: "--X",
+        -1: "0-X",
+        +40: "CAP",
         +30: "3--",
         +20: "2--",
         +10: "1--",
-        +0: "---",
+        +0: "0--",
         +31: "3-O",
         +21: "2-O",
         +11: "1-O",
-        +1: "--O"
+        +1: "0-O"
     }
 
     # SANTORINI: Done
@@ -47,7 +48,7 @@ class OthelloGame(Game):
         # return number of actions
         return self.n**4
 
-    # SANTORINI: TODO - Validate
+    # SANTORINI: Done
     def getNextState(self, board, player, action):
         # if player takes action on board, return next (board,player)
         # action must be a valid move
@@ -55,14 +56,12 @@ class OthelloGame(Game):
         b.pieces = np.copy(board)
 
         move = (int(action/self.n**3), int((action/self.n**2)%self.n))
-        b.execute_move(move, player)
-
         build = (int((action/self.n)%self.n), int(action%self.n))
-        b.execute_build(build)
+        b.execute_move_build(move, build, player)
 
         return (b.pieces, -player)
 
-    # SANTORINI: TODO - In Progress
+    # SANTORINI: Done
     def getValidMoves(self, board, player):
         # return a fixed size binary vector
         valids = [0]*self.getActionSize()

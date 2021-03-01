@@ -13,7 +13,6 @@ class RandomPlayer():
             a = np.random.randint(self.game.getActionSize())
         return a
 
-
 class HumanOthelloPlayer():
     def __init__(self, game):
         self.game = game
@@ -23,16 +22,16 @@ class HumanOthelloPlayer():
         valid = self.game.getValidMoves(board, 1)
         for i in range(len(valid)):
             if valid[i]:
-                print("[", int(i/self.game.n), int(i%self.game.n), end="] ")
+                print("[(", int(i/self.game.n**3), ", ", int((i/self.game.n**2)%self.game.n), "), (", int((i/self.game.n)%self.game.n), ", ", int(i%self.game.n),  end=")] ", sep='')
         while True:
             input_move = input()
             input_a = input_move.split(" ")
-            if len(input_a) == 2:
+            if len(input_a) == 4:
                 try:
-                    x,y = [int(i) for i in input_a]
-                    if ((0 <= x) and (x < self.game.n) and (0 <= y) and (y < self.game.n)) or \
-                            ((x == self.game.n) and (y == 0)):
-                        a = self.game.n * x + y if x != -1 else self.game.n ** 2
+                    x_move, y_move, x_build, y_build = [int(i) for i in input_a]
+                    if ((0 <= x_move) and (x_move < self.game.n) and (0 <= y_move) and (y_move < self.game.n)) and \
+                        ((0 <= x_build) and (x_build < self.game.n) and (0 <= y_build) and (y_build < self.game.n)):
+                        a = (self.game.n ** 3) * x_move + (self.game.n ** 2) * y_move + (self.game.n * x_build) + y_build
                         if valid[a]:
                             break
                 except ValueError:

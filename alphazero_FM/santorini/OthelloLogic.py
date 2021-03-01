@@ -43,22 +43,21 @@ class Board():
         """Returns all the legal moves for the given color.
         (1 for white, -1 for black)
         """
+        new_moves_builds = set()
 
-        # Get all the squares with pieces of the given color.
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y] in [i * color for i in [1, 11, 21, 31]]:
-                    new_moves_builds = self.get_moves_for_square((x,y))
-                    break
-        return new_moves_builds
+                if self[x][y] in [i * color for i in [1, 11, 21]]:
+                    new_moves_builds.update(self.get_moves_for_square((x,y)))
+        return list(new_moves_builds)
 
     # SANTORINI: Done
     def has_legal_moves_builds(self, color):
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y] in [i * color for i in [1, 11, 21, 31]]:
-                    new_moves_builds = self.get_moves_for_square((x,y))
-                    if len(new_moves_builds)>0:
+                if self[x][y] in [i * color for i in [1, 11, 21]]:
+                    newmoves = self.get_moves_for_square((x,y))
+                    if len(newmoves)>0:
                         return True
         return False
 
@@ -71,46 +70,31 @@ class Board():
         for direction_move in self.__directions_move:
             move = self._discover_move(square, direction_move)
 
-            if move:
+            if move is not None:
                 for direction_build in self.__directions_build:
                     build = self._discover_build(move, direction_build)
-                    if build:
+                    if build is not None:
                         move_build = (move, build)
                         moves_builds.append(move_build)
-        # return the generated move list
+
         return moves_builds
 
     # SANTORINI: Done
-    def is_legal_move(self, x_sum, y_sum, color):
-        if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0) and \
-                (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21, 31]]):
-            return True
-        return False
-
-    # SANTORINI: Done
-    def is_legal_build(self, x_sum, y_sum, color):
-        if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0) and \
-                (self[x_sum][y_sum] not in [1, -1, 11, -11, 21, -21, 31, -31, 30, -30]):
-            return True
-        return False
-
-    # SANTORINI: Done
-    def execute_move(self, move, color):
+    def execute_move_build(self, move, build, color):
         # Move
-        x_orig, y_orig = move
-        self.remove_color(color)
-        self[x_orig][y_orig] = color*(self[x_orig][y_orig]+1)
+        x_move, y_move = move
+        self._remove_color(color)
+        self[x_move][y_move] = color*(self[x_move][y_move]+1)
+
+        # Build
+        x_build, y_build = build
+        self[x_build][y_build] += 10
 
     # SANTORINI: Done
-    def execute_build(self, build):
-        x_orig, y_orig = build
-        self[x_orig][y_orig] += 10
-
-    # SANTORINI: Done
-    def remove_color(self, color):
+    def _remove_color(self, color):
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y] in [i * color for i in [1, 11, 21, 31]]:
+                if self[x][y] in [i * color for i in [1, 11, 21]]:
                     self[x][y] = (self[x][y] - color) * color
 
     # SANTORINI: Done
@@ -121,15 +105,26 @@ class Board():
         x_orig, y_orig = origin
         x_dir, y_dir = direction
 
+        color = int(copysign(1, self[x_orig][y_orig]))
+
+        if self._is_legal_move(origin, direction, color):
+            return (x_orig + x_dir, y_orig + y_dir)
+
+        return None
+
+    # SANTORINI: Done
+    def _is_legal_move(self, origin, direction, color):
+        x_orig, y_orig = origin
+        x_dir, y_dir = direction
+
         x_sum = x_orig + x_dir
         y_sum = y_orig + y_dir
 
-        color = int(copysign(1, self[x_orig][y_orig]))
-
-        if self.is_legal_move(x_sum, y_sum, color):
-            return (x_sum, y_sum)
-
-        return None
+        if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0): # boundaries of board
+            if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21]]) and (self[x_sum][y_sum] not in [40, -40]): # players present or capped building
+                if self[x_sum][y_sum] - (self[x_orig][y_orig] - color) * color <= 10: # players can drop building but not increase by more than one
+                    return True
+        return False
 
     # SANTORINI: Done
     def _discover_build(self, origin, direction):
@@ -142,12 +137,19 @@ class Board():
         x_sum = x_orig + x_dir
         y_sum = y_orig + y_dir
 
-        color = int(copysign(1, self[x_orig][y_orig]))
-
-        if self.is_legal_build(x_sum, y_sum, color):
+        if self._is_legal_build(x_sum, y_sum):
             return (x_sum, y_sum)
 
         return None
+
+    # SANTORINI: Done
+    def _is_legal_build(self, x_sum, y_sum):
+        if (not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0)):
+            if (self[x_sum][y_sum] not in [1, -1, 11, -11, 21, -21, 40, -40]):
+                # print(self[x_sum][y_sum])
+                return True
+        return False
+
 
     #TO DELETE
     def countDiff(self, color):
