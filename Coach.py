@@ -54,8 +54,8 @@ class Coach():
         while True:
             episodeStep += 1
             canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer) # This is good, return depending on the payer
-            print('---------coach-------------')
-            print(board)
+            # print('---------coach-------------')
+            # print(board)
             temp = int(episodeStep < self.args.tempThreshold)
 
             pi = self.mcts.getActionProb(canonicalBoard, obj_board=board, player=self.curPlayer, temp=temp) # To check it returns what

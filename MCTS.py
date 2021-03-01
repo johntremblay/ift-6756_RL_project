@@ -75,8 +75,8 @@ class MCTS():
         Returns:
             v: the negative of the value of the current canonicalBoard
         """
-        print(f'---------search_debut-----({player})------')
-        print(obj_board)
+        # print(f'---------search_debut-----({player})------')
+        # print(obj_board)
         s = self.game.stringRepresentation(obj_board)
 
         if s not in self.Es:
@@ -137,8 +137,8 @@ class MCTS():
         # print(next_s_obj.mirror())
         # next_s_obj.apply_mirror()
         # print(next_s_obj)
-        print(f'---------search_apres-----({next_player})------')
-        print(obj_board)
+        # print(f'---------search_apres-----({next_player})------')
+        # print(obj_board)
         v = self.search(next_s, next_s_obj, next_player)
 
         if (s, a) in self.Qsa:
