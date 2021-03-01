@@ -17,9 +17,9 @@ args = dotdict({
     'arenaCompare': 2,         # Number of games to play during arena play to determine if new net will be accepted.
     'cpuct': 1,
 
-    'checkpoint': './training/',
-    'load_model': False,
-    'load_folder_file': ('./training/model/','best.pth.tar'),
+    'checkpoint': '/home/john/PycharmProjects/ift-6756_RL_project/training/',
+    'load_model': True,
+    'load_folder_file': ('/home/john/PycharmProjects/ift-6756_RL_project/checkpoint/', 'checkpoint.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 
 })

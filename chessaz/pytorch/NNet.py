@@ -24,7 +24,7 @@ from .ChessNNet import ChessNNet as onnet
 args = dotdict({
     'lr': 0.0005,
     'dropout': 0.1,
-    'epochs': 2,
+    'epochs': 1,
     'batch_size': 2,
     'cuda': torch.cuda.is_available(),
     'num_channels': 2, #512 need 7.88 GB RAM free in GPU
@@ -105,6 +105,7 @@ class NNetWrapper(NeuralNet):
             #     )
             #     bar.next()
             # bar.finish()
+        self.save_checkpoint()
 
     def predict(self, board):
         """

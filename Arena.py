@@ -1,5 +1,5 @@
 import logging
-
+import numpy as np
 from tqdm import tqdm
 
 log = logging.getLogger(__name__)
@@ -43,24 +43,18 @@ class Arena():
         it = 0
         while self.game.getGameEnded(board, curPlayer) == 0:
             it += 1
-            if verbose:
-                assert self.display
-                print("Turn ", str(it), "Player ", str(curPlayer))
-                self.display(board)
             action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer), board)
+            print(f"player {curPlayer}")
+            valids = self.game.getValidMoves(board, curPlayer)
 
-            valids = self.game.getValidMoves(board, 1)
-
-            if valids[action] == 0:
-                log.error(f'Action {action} is not valid!')
-                log.debug(f'valids = {valids}')
-                assert valids[action] > 0
+            if valids[action] != 1:
+                action = np.argmax(self.game.getValidMoves(board, curPlayer))
+            if curPlayer != (1 if board.turn else -1):
+                print(1)
             board, curPlayer = self.game.getNextState(board, curPlayer, action)
+            print(board)
             # board = board.mirror()
-        if verbose:
-            assert self.display
-            print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board, 1)))
-            self.display(board)
+        a = self.game.getGameEnded(board, curPlayer)
         return curPlayer * self.game.getGameEnded(board, curPlayer)
 
     def playGames(self, num, verbose=False):
@@ -87,7 +81,7 @@ class Arena():
             else:
                 draws += 1
 
-        self.player1, self.player2 = self.player2, self.player1
+        # self.player1, self.player2 = self.player2, self.player1
 
         for _ in tqdm(range(num), desc="Arena.playGames (2)"):
             gameResult = self.playGame(verbose=verbose)

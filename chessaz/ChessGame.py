@@ -69,7 +69,8 @@ class ChessGame(Game):
         """
         # TODO remove assert not required part for speed
         # print("im in get next state")
-        assert libPlayerToChessPlayer(board.turn) == player
+        if not libPlayerToChessPlayer(board.turn) == player:
+            print(1)
         move = self.all_possible_moves[action]
         # if not board.turn:  # black move from CanonicalForm
         #     move = str(mirror_action(chess.Move.from_uci(move)))
@@ -129,7 +130,6 @@ class ChessGame(Game):
         elif r == "0-1":
             return -player
         elif r == "1/2-1/2":
-            return 0.001  # TODO how small is better?
             return 0.001  # TODO how small is better?
         else:
             return 0
