@@ -65,7 +65,8 @@ class Coach():
 
             to_validate = self.game.getValidMoves(board, self.curPlayer)
             action = np.random.choice(len(pi), p=pi)
-            assert to_validate[action] == 1
+            if not to_validate[action] == 1:
+                action = np.argmax(self.game.getValidMoves(board, self.curPlayer))
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
 
             # board.apply_mirror()
