@@ -44,7 +44,7 @@ class Arena():
         while self.game.getGameEnded(board, curPlayer) == 0:
             it += 1
             action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer), board)
-            print(f"player {curPlayer}")
+            # print(f"player {curPlayer}")
             valids = self.game.getValidMoves(board, curPlayer)
 
             if valids[action] != 1:
