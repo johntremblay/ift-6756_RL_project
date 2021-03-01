@@ -45,6 +45,6 @@ hp = HumanOthelloPlayer(g).play
 #
 #     player2 = n2p  # Player 2 is neural network if it's cpu vs cpu.
 
-arena = Arena.Arena(hp, hp, g, display=OthelloGame.display)
+arena = Arena.Arena(rp, rp, g, display=OthelloGame.display)
 
 print(arena.playGames(2, verbose=True))
