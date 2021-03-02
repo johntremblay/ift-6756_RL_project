@@ -13,7 +13,7 @@ class RandomPlayer():
             a = np.random.randint(self.game.getActionSize())
         return a
 
-class HumanOthelloPlayer():
+class HumanSantoriniPlayer():
     def __init__(self, game):
         self.game = game
 
@@ -41,7 +41,7 @@ class HumanOthelloPlayer():
         return a
 
 
-class GreedyOthelloPlayer():
+class GreedySantoriniPlayer():
     def __init__(self, game):
         self.game = game
 

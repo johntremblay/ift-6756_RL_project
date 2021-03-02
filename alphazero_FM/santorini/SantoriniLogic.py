@@ -122,7 +122,7 @@ class Board():
 
         if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0): # boundaries of board
             if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21]]) and (self[x_sum][y_sum] not in [40, -40]): # players present or capped building
-                if self[x_sum][y_sum] - (self[x_orig][y_orig] - color) * color <= 10: # players can drop building but not increase by more than one
+                if self[x_sum][y_sum] * color - (self[x_orig][y_orig] - color) <= 10: # players can drop building but not increase by more than one
                     return True
         return False
 

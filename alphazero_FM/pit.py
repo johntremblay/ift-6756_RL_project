@@ -19,8 +19,8 @@ g = SantoriniGame(5)
 
 # all players
 rp = RandomPlayer(g).play
-gp = GreedyOthelloPlayer(g).play
-hp = HumanOthelloPlayer(g).play
+gp = GreedySantoriniPlayer(g).play
+hp = HumanSantoriniPlayer(g).play
 
 
 
@@ -45,6 +45,6 @@ hp = HumanOthelloPlayer(g).play
 #
 #     player2 = n2p  # Player 2 is neural network if it's cpu vs cpu.
 
-arena = Arena.Arena(rp, rp, g, display=SantoriniGame.display)
+arena = Arena.Arena(hp, rp, g, display=SantoriniGame.display)
 
 print(arena.playGames(2, verbose=True))
