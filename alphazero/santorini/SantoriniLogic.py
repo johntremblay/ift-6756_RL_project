@@ -76,7 +76,6 @@ class Board():
                     if build is not None:
                         move_build = (move, build)
                         moves_builds.append(move_build)
-
         return moves_builds
 
     # SANTORINI: Done
@@ -137,16 +136,17 @@ class Board():
         x_sum = x_orig + x_dir
         y_sum = y_orig + y_dir
 
-        if self._is_legal_build(x_sum, y_sum):
+        color = int(copysign(1, self[x_orig][y_orig]))
+
+        if self._is_legal_build(x_sum, y_sum, color):
             return (x_sum, y_sum)
 
         return None
 
     # SANTORINI: Done
-    def _is_legal_build(self, x_sum, y_sum):
+    def _is_legal_build(self, x_sum, y_sum, color):
         if (not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0)):
-            if (self[x_sum][y_sum] not in [1, -1, 11, -11, 21, -21, 40, -40]):
-                # print(self[x_sum][y_sum])
+            if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21]]) and (self[x_sum][y_sum] not in [40, -40]):
                 return True
         return False
 

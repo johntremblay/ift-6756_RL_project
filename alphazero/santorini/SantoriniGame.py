@@ -88,15 +88,20 @@ class SantoriniGame(Game):
         # player = 1
         b = Board(self.n)
         b.pieces = np.copy(board)
+        win = 0
         if not (b.has_legal_moves_builds(player)):
-            return -player
+            win = -1
+        if not (b.has_legal_moves_builds(-player)):
+            win = 1
         for i in range(self.n):
             for j in range(self.n):
                 if b.pieces[i][j] == 31:
-                    return 1
-                elif b.pieces[i][j] == -31:
-                    return -1
-        return 0
+                    win = 1
+                if b.pieces[i][j] == -31:
+                    win = -1
+        if win != 0:
+            print(b.pieces)
+        return win
 
     # SANTORINI: Done
     def getCanonicalForm(self, board, player):
