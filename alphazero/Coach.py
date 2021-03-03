@@ -63,8 +63,6 @@ class Coach():
 
             action = np.random.choice(len(pi), p=pi)
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
-            if self.curPlayer == -1:
-                board = board * self.curPlayer
             r = self.game.getGameEnded(board, self.curPlayer)
             print(board)
             if r != 0:
