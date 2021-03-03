@@ -103,7 +103,13 @@ class SantoriniGame(Game):
     # SANTORINI: Done
     def getCanonicalForm(self, board, player):
         # return state if player==1, else return -state if player==-1
-        return player * board
+        assert isinstance(board, np.ndarray)
+        output = player * board
+        for row in range(output.shape[0]):
+            for col in range(output.shape[1]):
+                if output[row][col] in [-10, -20, -30, -40]:
+                    output[row][col] = output[row][col] * -1
+        return output
 
     # TODO: Major work here
     def getSymmetries(self, board, pi):
@@ -145,6 +151,8 @@ class SantoriniGame(Game):
             print(y, "|", end="")  # print the row #
             for x in range(n):
                 piece = board[y][x]  # get the piece to print
+                if piece in [-10, -20, -30, -40]:
+                    piece *= -1
                 print(SantoriniGame.square_content[piece], end=" ")
             print("|")
 
@@ -160,6 +168,9 @@ def getNNForm(board):
     for row in range(board.shape[0]):
         for col in range(board.shape[1]):
             square = board[row][col]
-            board_i = board_level_map[square]
+            if square in [-10, -20, -30, -40]:
+                board_i = board_level_map[-square]
+            else:
+                board_i = board_level_map[square]
             nn_board[board_i, row, col] = 1.0
     return nn_board

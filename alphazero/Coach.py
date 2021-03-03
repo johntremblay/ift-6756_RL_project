@@ -66,7 +66,7 @@ class Coach():
             if self.curPlayer == -1:
                 board = board * self.curPlayer
             r = self.game.getGameEnded(board, self.curPlayer)
-
+            print(board)
             if r != 0:
                 return [(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
 
