@@ -89,9 +89,7 @@ class SantoriniGame(Game):
         b = Board(self.n)
         b.pieces = np.copy(board)
         if not (b.has_legal_moves_builds(player)):
-            return -1
-        if not (b.has_legal_moves_builds(-player)):
-            return 1
+            return -player
         for i in range(self.n):
             for j in range(self.n):
                 if b.pieces[i][j] == 31:
