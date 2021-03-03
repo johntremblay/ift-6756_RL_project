@@ -44,7 +44,7 @@ class SantoriniGame(Game):
     # SANTORINI: Done
     def getBoardSize(self):
         # (a,b) tuple
-        return (self.n, self.n)
+        return (13, self.n, self.n)
 
     # SANTORINI: Done
     def getActionSize(self):
