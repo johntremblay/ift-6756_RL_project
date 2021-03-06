@@ -55,7 +55,6 @@ class Arena():
                 log.error(f'Action {action} is not valid!')
                 log.debug(f'valids = {valids}')
                 # assert valids[action] > 0
-            print(board)
             board, curPlayer = self.game.getNextState(board, curPlayer, action)
         if verbose:
             assert self.display
