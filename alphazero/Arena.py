@@ -1,5 +1,6 @@
 import logging
 from tqdm import tqdm
+from santorini.SantoriniGame import getNNForm
 
 log = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ class Arena():
             assert self.display
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board, 1)))
             self.display(board)
-        from santorini.SantoriniGame import getNNForm
+
         return curPlayer * self.game.getGameEnded(board, curPlayer)
 
     def playGames(self, num, verbose=False):

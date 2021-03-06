@@ -89,16 +89,20 @@ class SantoriniGame(Game):
         b = Board(self.n)
         b.pieces = np.copy(board)
         win = 0
-        if not (b.has_legal_moves_builds(player)):
+
+        print(sum(self.getValidMoves(board, player)))
+        print(sum(self.getValidMoves(board, -player)))
+        if not b.has_legal_moves_builds(player):
             win = -1
-        if not (b.has_legal_moves_builds(-player)):
+        elif not b.has_legal_moves_builds(-player):
             win = 1
-        for i in range(self.n):
-            for j in range(self.n):
-                if b.pieces[i][j] == 31:
-                    win = 1
-                if b.pieces[i][j] == -31:
-                    win = -1
+        else:
+            for i in range(self.n):
+                for j in range(self.n):
+                    if b.pieces[i][j] == 31:
+                        win = 1
+                    if b.pieces[i][j] == -31:
+                        win = -1
         if win != 0:
             print(b.pieces)
         return win
@@ -113,6 +117,7 @@ class SantoriniGame(Game):
                 if output[row][col] in [-10, -20, -30, -40]:
                     output[row][col] = output[row][col] * -1
         return output
+
 
     # TODO: Major work here
     def getSymmetries(self, board, pi):
