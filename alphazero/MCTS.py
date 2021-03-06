@@ -125,6 +125,7 @@ class MCTS():
         next_s = self.game.getCanonicalForm(next_s, next_player)
         # if next_player == -1:
         #     next_s = next_s * next_player
+        # Pourquoi il mettait ça?
         v = self.search(next_s)
 
         if (s, a) in self.Qsa:
