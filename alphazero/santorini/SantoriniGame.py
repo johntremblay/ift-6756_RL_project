@@ -92,17 +92,13 @@ class SantoriniGame(Game):
         for i in range(self.n):
             for j in range(self.n):
                 if b.pieces[i][j] == 31:
-                    print(b.pieces)
                     return 1
                 elif b.pieces[i][j] == -31:
-                    print(b.pieces)
                     return -1
 
-        if not b.has_legal_moves_builds(player):
-            print(b.pieces)
+        if not b.has_legal_moves_builds(1):
             return -1
-        elif not b.has_legal_moves_builds(-player):
-            print(b.pieces)
+        elif not b.has_legal_moves_builds(-1):
             return 1
 
         return 0
