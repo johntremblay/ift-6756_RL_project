@@ -100,7 +100,7 @@ class SantoriniGame(Game):
 
         if not b.has_legal_moves_builds(player):
             return -player
-        elif not b.has_legal_moves_builds(-player):
+        if not b.has_legal_moves_builds(-player):
             return player
 
         return 0
