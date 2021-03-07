@@ -97,10 +97,12 @@ class SantoriniGame(Game):
             for j in range(self.n):
                 if b.pieces[i][j] == player * 31:
                     return player
+                elif b.pieces[i][j] == -player * 31:
+                    return -player
 
         if not b.has_legal_moves_builds(player):
             return -player
-        if not b.has_legal_moves_builds(-player):
+        elif not b.has_legal_moves_builds(-player):
             return player
 
         return 0
