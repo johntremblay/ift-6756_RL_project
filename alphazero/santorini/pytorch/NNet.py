@@ -22,12 +22,12 @@ from torchvision import datasets, transforms
 from .SantoriniNNet import SantoriniNNet as onnet
 
 args = dotdict({
-    'lr': 0.0005,
+    'lr': 0.001,
     'dropout': 0.1,
-    'epochs': 2,
-    'batch_size': 16,
+    'epochs': 10,
+    'batch_size': 32,
     'cuda': torch.cuda.is_available(),
-    'num_channels': 32, #512 need 7.88 GB RAM free in GPU
+    'num_channels': 256, #512 need 7.88 GB RAM free in GPU
 })
 
 
