@@ -19,7 +19,6 @@ g = SantoriniGame(5)
 
 # all players
 rp = RandomPlayer(g).play
-gp = GreedySantoriniPlayer(g).play
 hp = HumanSantoriniPlayer(g).play
 
 # nnet players
