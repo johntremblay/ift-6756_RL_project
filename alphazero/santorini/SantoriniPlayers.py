@@ -22,7 +22,8 @@ class HumanSantoriniPlayer():
         valid = self.game.getValidMoves(board, 1)
         for i in range(len(valid)):
             if valid[i]:
-                print("[(", int(i/self.game.n**3), ", ", int((i/self.game.n**2)%self.game.n), "), (", int((i/self.game.n)%self.game.n), ", ", int(i%self.game.n),  end=")] ", sep='')
+                move, build = self.game.read_action(i)
+                print("[(", move[0], ", ", move[1], "), (", build[0], ", ", build[1],  end=")] ", sep='')
         while True:
             input_move = input()
             input_a = input_move.split(" ")

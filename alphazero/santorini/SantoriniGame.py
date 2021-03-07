@@ -58,11 +58,15 @@ class SantoriniGame(Game):
         b = Board(self.n)
         b.pieces = np.copy(board)
 
-        move = (int(action / self.n ** 3), int((action / self.n ** 2) % self.n))
-        build = (int((action / self.n) % self.n), int(action % self.n))
+        move, build = self.read_action(action)
         b.execute_move_build(move, build, player)
 
         return (b.pieces, -player)
+
+    def read_action(self, action):
+        move = (int(action / self.n ** 3), int((action / self.n ** 2) % self.n))
+        build = (int((action / self.n) % self.n), int(action % self.n))
+        return move, build
 
     # SANTORINI: Done
     def getValidMoves(self, board, player):
@@ -91,15 +95,11 @@ class SantoriniGame(Game):
 
         for i in range(self.n):
             for j in range(self.n):
-                if b.pieces[i][j] == 31:
-                    return 1
-                elif b.pieces[i][j] == -31:
-                    return -1
+                if b.pieces[i][j] == player * 31:
+                    return player
 
-        if not b.has_legal_moves_builds(1):
-            return -1
-        elif not b.has_legal_moves_builds(-1):
-            return 1
+        if not b.has_legal_moves_builds(player):
+            return -player
 
         return 0
 
