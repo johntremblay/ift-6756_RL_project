@@ -93,7 +93,7 @@ class Board():
     def _remove_color(self, color):
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y] in [i * color for i in [1, 11, 21]]:
+                if self[x][y] in [i * color for i in [1, 11, 21, 31]]:
                     self[x][y] = (self[x][y] - color) * color
 
     # SANTORINI: Done
@@ -120,7 +120,7 @@ class Board():
         y_sum = y_orig + y_dir
 
         if not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0): # boundaries of board
-            if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21]]) and (self[x_sum][y_sum] not in [40, -40]): # players present or capped building
+            if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21, 31]]) and (self[x_sum][y_sum] not in [40, -40]): # players present or capped building
                 if self[x_sum][y_sum] - color * (self[x_orig][y_orig] - color) <= 10:
                     return True
         return False
@@ -146,6 +146,6 @@ class Board():
     # SANTORINI: Done
     def _is_legal_build(self, x_sum, y_sum, color):
         if (not (x_sum >= self.n or y_sum >= self.n or x_sum < 0 or y_sum < 0)):
-            if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21]]) and (self[x_sum][y_sum] not in [40, -40]):
+            if (self[x_sum][y_sum] not in [i * (-color) for i in [1, 11, 21, 31]]) and (self[x_sum][y_sum] not in [40, -40]):
                 return True
         return False
