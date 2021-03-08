@@ -65,7 +65,7 @@ class Arena():
             self.display(board)
 
         # return curPlayer * self.game.getGameEnded(board, curPlayer)
-        return self.game.getGameEnded(board, curPlayer)
+        return -self.game.getGameEnded(board, curPlayer)
 
     def playGames(self, num, verbose=False):
         """
