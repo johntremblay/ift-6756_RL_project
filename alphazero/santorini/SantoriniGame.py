@@ -7,6 +7,8 @@ from .SantoriniLogic import Board
 import numpy as np
 
 
+# TODO: Could possibly let the player decide where to initiate its pawn
+
 class SantoriniGame(Game):
     # SANTORINI: Done
     square_content = {
@@ -44,7 +46,7 @@ class SantoriniGame(Game):
     # SANTORINI: Done
     def getBoardSize(self):
         # (a,b) tuple
-        return (13, self.n, self.n)
+        return 13, self.n, self.n
 
     # SANTORINI: Done
     def getActionSize(self):
@@ -88,10 +90,22 @@ class SantoriniGame(Game):
 
     # SANTORINI: Done
     def getGameEnded(self, board, player):
-        # return 0 if not ended, 1 if player 1 won, -1 if player 1 lost
-        # player = 1
+        """
+        This method outputs if within a current state of the board if the game is finished and a player as won or
+        not.
+        :param board: np array representation of the board
+        :param player: -1 or 1 to represent a player
+        :return: int -1 or 1 or 0 depending if the game is finished or not
+        """
         b = Board(self.n)
         b.pieces = np.copy(board)
+
+        outcome_p1 = np.where(b.pieces == player * 31)
+        if outcome_p1[0].size > 0:
+            return player
+        outcome_p2 = np.where(b.pieces == -player * 31)
+        if outcome_p2[0].size > 0:
+            return -player
 
         for i in range(self.n):
             for j in range(self.n):
@@ -117,7 +131,6 @@ class SantoriniGame(Game):
                 if output[row][col] in [-10, -20, -30, -40]:
                     output[row][col] = output[row][col] * -1
         return output
-
 
     # TODO: Major work here
     def getSymmetries(self, board, pi):
