@@ -25,9 +25,9 @@ args = dotdict({
     'lr': 0.001,
     'dropout': 0.1,
     'epochs': 20,
-    'batch_size': 128,
+    'batch_size': 1024,
     'cuda': torch.cuda.is_available(),
-    'num_channels': 512, #512 need 7.88 GB RAM free in GPU
+    'num_channels': 1024, #512 need 7.88 GB RAM free in GPU
 })
 
 
