@@ -76,7 +76,7 @@ class MCTS():
         s = self.game.stringRepresentation(canonicalBoard)
 
         if s not in self.Es:
-            self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)
+            self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)  # sending player 1 only
         if self.Es[s] != 0:
             # terminal node
             return -self.Es[s]
@@ -85,7 +85,7 @@ class MCTS():
             # leaf node
             nn_form = getNNForm(canonicalBoard)
             self.Ps[s], v = self.nnet.predict(nn_form)
-            valids = self.game.getValidMoves(canonicalBoard, 1)
+            valids = self.game.getValidMoves(canonicalBoard, 1)  # sending player 1 only
             self.Ps[s] = self.Ps[s] * valids  # masking invalid moves
             sum_Ps_s = np.sum(self.Ps[s])
             if sum_Ps_s > 0:
@@ -124,7 +124,7 @@ class MCTS():
         next_s, next_player = self.game.getNextState(canonicalBoard, 1, a)
         next_s = self.game.getCanonicalForm(next_s, next_player)
 
-        v = self.search(next_s)
+        v = self.search(next_s)  # issue can happen here since we can send the board as player -1 playing and MCTS only considers player 1
 
         if (s, a) in self.Qsa:
             self.Qsa[(s, a)] = (self.Nsa[(s, a)] * self.Qsa[(s, a)] + v) / (self.Nsa[(s, a)] + 1)

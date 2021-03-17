@@ -51,7 +51,7 @@ class SantoriniGame(Game):
     # SANTORINI: Done
     def getActionSize(self):
         # return number of actions
-        return self.n ** 4
+        return self.n ** 4  # TODO: confirm how was this calculated with FM
 
     # SANTORINI: Done
     def getNextState(self, board, player, action):
@@ -72,6 +72,7 @@ class SantoriniGame(Game):
 
     # SANTORINI: Done
     def getValidMoves(self, board, player):
+        # TODO: Check that this method is ok
         # return a fixed size binary vector
         valids = [0] * self.getActionSize()
         b = Board(self.n)
