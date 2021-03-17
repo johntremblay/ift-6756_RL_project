@@ -24,10 +24,10 @@ from .SantoriniNNet import SantoriniNNet as onnet
 args = dotdict({
     'lr': 0.001,
     'dropout': 0.1,
-    'epochs': 2,
-    'batch_size': 2,
+    'epochs': 20,
+    'batch_size': 512,
     'cuda': torch.cuda.is_available(),
-    'num_channels': 8, #512 need 7.88 GB RAM free in GPU
+    'num_channels': 512, #512 need 7.88 GB RAM free in GPU
 })
 
 
