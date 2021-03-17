@@ -50,7 +50,7 @@ class Arena():
 
             action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer))
 
-            valids = self.game.getValidMoves(self.game.getCanonicalForm(board, curPlayer), 1)
+            valids = self.game.getValidMoves_any_board(self.game.getCanonicalForm(board, curPlayer), curPlayer)
 
             if valids[action] == 0:
                 move, build = self.game.read_action(action)
