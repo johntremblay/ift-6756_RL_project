@@ -54,6 +54,11 @@ class SantoriniGame(Game):
         return self.n ** 4  # TODO: confirm how was this calculated with FM
 
     # SANTORINI: Done
+    def getActionSize_any_board(n):
+        # return number of actions
+        return n ** 4  # TODO: confirm how was this calculated with FM
+
+    # SANTORINI: Done
     def getNextState(self, board, player, action):
         # if player takes action on board, return next (board,player)
         # action must be a valid move
@@ -64,6 +69,25 @@ class SantoriniGame(Game):
         b.execute_move_build(move, build, player)
 
         return (b.pieces, -player)
+
+    # SANTORINI: Done
+    @staticmethod
+    def getNextState_any_board(board, player, action):
+        # if player takes action on board, return next (board,player)
+        # action must be a valid move
+        b = Board(5)
+        b.pieces = np.copy(board)
+
+        move, build = SantoriniGame.read_action_any_board(action)
+        b.execute_move_build(move, build, player)
+
+        return (b.pieces, -player)
+
+    @staticmethod
+    def read_action_any_board(action):
+        move = (int(action / 5 ** 3), int((action / 5 ** 2) % 5))
+        build = (int((action / 5) % 5), int(action % 5))
+        return move, build
 
     def read_action(self, action):
         move = (int(action / self.n ** 3), int((action / self.n ** 2) % self.n))
@@ -86,6 +110,26 @@ class SantoriniGame(Game):
             x_move, y_move = move
             x_build, y_build = build
             valids[(self.n ** 3) * x_move + (self.n ** 2) * y_move + (self.n) * x_build + y_build] = 1
+
+        return np.array(valids)
+
+    # SANTORINI: Done
+    @staticmethod
+    def getValidMoves_any_board(board, player):
+        # TODO: Check that this method is ok
+        # return a fixed size binary vector
+        valids = [0] * SantoriniGame.getActionSize_any_board(5)
+        b = Board(5)
+        b.pieces = np.copy(board)
+        legalMoves = b.get_legal_moves_builds(player)
+
+        if len(legalMoves) == 0:
+            return np.array(valids)
+
+        for move, build in legalMoves:
+            x_move, y_move = move
+            x_build, y_build = build
+            valids[(5 ** 3) * x_move + (5 ** 2) * y_move + (5) * x_build + y_build] = 1
 
         return np.array(valids)
 
@@ -126,7 +170,7 @@ class SantoriniGame(Game):
     def getCanonicalForm(self, board, player):
         # return state if player==1, else return -state if player==-1
         assert isinstance(board, np.ndarray)
-        output = player * board
+        output = board # player * board
         for row in range(output.shape[0]):
             for col in range(output.shape[1]):
                 if output[row][col] in [-10, -20, -30, -40]:

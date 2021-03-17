@@ -26,7 +26,7 @@ class MCTS():
         self.Es = {}  # stores game.getGameEnded ended for board s
         self.Vs = {}  # stores game.getValidMoves for board s
 
-    def getActionProb(self, canonicalBoard, temp=1):
+    def getActionProb(self, canonicalBoard, player, temp=1):
         """
         This function performs numMCTSSims simulations of MCTS starting from
         canonicalBoard.
@@ -36,7 +36,7 @@ class MCTS():
                    proportional to Nsa[(s,a)]**(1./temp)
         """
         for i in range(self.args.numMCTSSims):
-            self.search(canonicalBoard)
+            self.search(canonicalBoard, player=player)
 
         s = self.game.stringRepresentation(canonicalBoard)
         counts = [self.Nsa[(s, a)] if (s, a) in self.Nsa else 0 for a in range(self.game.getActionSize())]
@@ -53,7 +53,7 @@ class MCTS():
         probs = [x / counts_sum for x in counts]
         return probs
 
-    def search(self, canonicalBoard):
+    def search(self, canonicalBoard, player):
         """
         This function performs one iteration of MCTS. It is recursively called
         till a leaf node is found. The action chosen at each node is one that
@@ -76,7 +76,7 @@ class MCTS():
         s = self.game.stringRepresentation(canonicalBoard)
 
         if s not in self.Es:
-            self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)  # sending player 1 only
+            self.Es[s] = self.game.getGameEnded(canonicalBoard, player)  # sending player 1 only
         if self.Es[s] != 0:
             # terminal node
             return -self.Es[s]
@@ -85,7 +85,7 @@ class MCTS():
             # leaf node
             nn_form = getNNForm(canonicalBoard)
             self.Ps[s], v = self.nnet.predict(nn_form)
-            valids = self.game.getValidMoves(canonicalBoard, 1)  # sending player 1 only
+            valids = self.game.getValidMoves_any_board(canonicalBoard, player)  # sending player 1 only
             self.Ps[s] = self.Ps[s] * valids  # masking invalid moves
             sum_Ps_s = np.sum(self.Ps[s])
             if sum_Ps_s > 0:
@@ -121,10 +121,10 @@ class MCTS():
                     best_act = a
 
         a = best_act
-        next_s, next_player = self.game.getNextState(canonicalBoard, 1, a)
-        next_s = self.game.getCanonicalForm(next_s, next_player)
+        next_s, next_player = self.game.getNextState_any_board(canonicalBoard, player, a)
+        next_s = self.game.getCanonicalForm(next_s, player)
 
-        v = self.search(next_s)  # issue can happen here since we can send the board as player -1 playing and MCTS only considers player 1
+        v = self.search(next_s, next_player)  # issue can happen here since we can send the board as player -1 playing and MCTS only considers player 1
 
         if (s, a) in self.Qsa:
             self.Qsa[(s, a)] = (self.Nsa[(s, a)] * self.Qsa[(s, a)] + v) / (self.Nsa[(s, a)] + 1)
