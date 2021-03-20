@@ -7,10 +7,7 @@ from .SantoriniLogic import Board
 import numpy as np
 
 
-# TODO: Could possibly let the player decide where to initiate its pawn
-
 class SantoriniGame(Game):
-    # SANTORINI: Done
     square_content = {
         -31: "3-X",
         -21: "2-X",
@@ -27,40 +24,35 @@ class SantoriniGame(Game):
         +1: "0-O"
     }
 
-    # SANTORINI: Done
     @staticmethod
     def getSquarePiece(piece):
         return SantoriniGame.square_content[piece]
 
-    # SANTORINI: Done
     def __init__(self, n):
         super().__init__()
         self.n = n
 
-    # SANTORINI: Done
     def getInitBoard(self):
         # return initial board (numpy board)
         b = Board(self.n)
         return np.array(b.pieces)
 
-    # SANTORINI: Done
     def getBoardSize(self):
-        # (a,b) tuple
+        # TODO: Possibly change repsentation to a lower dimension (5x5x5)
         return 13, self.n, self.n
 
-    # SANTORINI: Done
     def getActionSize(self):
         # return number of actions
-        return self.n ** 4  # TODO: confirm how was this calculated with FM
+        # TODO: Possibly reduce to 8**2
+        return self.n ** 4
 
-    # SANTORINI: Done
+    @staticmethod
     def getActionSize_any_board(n):
         # return number of actions
-        return n ** 4  # TODO: confirm how was this calculated with FM
+        return n ** 4
 
-    # SANTORINI: Done
     def getNextState(self, board, player, action):
-        # if player takes action on board, return next (board,player)
+        # if player takes action on board, return next (board, player)
         # action must be a valid move
         b = Board(self.n)
         b.pieces = np.copy(board)
@@ -70,11 +62,11 @@ class SantoriniGame(Game):
 
         return (b.pieces, -player)
 
-    # SANTORINI: Done
     @staticmethod
     def getNextState_any_board(board, player, action):
         # if player takes action on board, return next (board,player)
         # action must be a valid move
+        # TODO: if larger board
         b = Board(5)
         b.pieces = np.copy(board)
 
@@ -85,6 +77,7 @@ class SantoriniGame(Game):
 
     @staticmethod
     def read_action_any_board(action):
+        # TODO: Board size
         move = (int(action / 5 ** 3), int((action / 5 ** 2) % 5))
         build = (int((action / 5) % 5), int(action % 5))
         return move, build
@@ -94,9 +87,7 @@ class SantoriniGame(Game):
         build = (int((action / self.n) % self.n), int(action % self.n))
         return move, build
 
-    # SANTORINI: Done
     def getValidMoves(self, board, player):
-        # TODO: Check that this method is ok
         # return a fixed size binary vector
         valids = [0] * self.getActionSize()
         b = Board(self.n)
@@ -113,10 +104,9 @@ class SantoriniGame(Game):
 
         return np.array(valids)
 
-    # SANTORINI: Done
     @staticmethod
     def getValidMoves_any_board(board, player):
-        # TODO: Check that this method is ok
+        # TODO Board size
         # return a fixed size binary vector
         valids = [0] * SantoriniGame.getActionSize_any_board(5)
         b = Board(5)
@@ -133,7 +123,6 @@ class SantoriniGame(Game):
 
         return np.array(valids)
 
-    # SANTORINI: Done
     def getGameEnded(self, board, player):
         """
         This method outputs if within a current state of the board if the game is finished and a player as won or
@@ -142,6 +131,7 @@ class SantoriniGame(Game):
         :param player: -1 or 1 to represent a player
         :return: int -1 or 1 or 0 depending if the game is finished or not
         """
+        # TODO: Make sure that when we call this, is the game ended for a specific player
         b = Board(self.n)
         b.pieces = np.copy(board)
 
@@ -152,25 +142,17 @@ class SantoriniGame(Game):
         if outcome_p2[0].size > 0:
             return -player
 
-        for i in range(self.n):
-            for j in range(self.n):
-                if b.pieces[i][j] == player * 31:
-                    return player
-                elif b.pieces[i][j] == -player * 31:
-                    return -player
-
         if not b.has_legal_moves_builds(player):
             return -player
         elif not b.has_legal_moves_builds(-player):
             return player
-
         return 0
 
-    # SANTORINI: Done
     def getCanonicalForm(self, board, player):
+        # TODO: Really necessary?
         # return state if player==1, else return -state if player==-1
         assert isinstance(board, np.ndarray)
-        output = board # player * board
+        output = board  # player * board
         for row in range(output.shape[0]):
             for col in range(output.shape[1]):
                 if output[row][col] in [-10, -20, -30, -40]:
@@ -195,16 +177,13 @@ class SantoriniGame(Game):
         #         l += [(newB, list(newPi.ravel()) + [pi[-1]])]
         # return l
 
-    # SANTORINI: Done
     def stringRepresentation(self, board):
         return board.tostring()
 
-    # SANTORINI: Done
     def stringRepresentationReadable(self, board):
         board_s = "".join(self.square_content[square] for row in board for square in row)
         return board_s
 
-    # SANTORINI: Done
     @staticmethod
     def display(board):
         n = board.shape[0]

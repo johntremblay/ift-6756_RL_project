@@ -21,7 +21,7 @@ class Board():
     __directions_move = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1)]
     __directions_build = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1)]
 
-    # SANTORINI: Done
+
     def __init__(self, n):
         """Set up initial board configuration."""
         super().__init__()
@@ -40,7 +40,7 @@ class Board():
     def __getitem__(self, index):
         return self.pieces[index]
 
-    # SANTORINI: Done
+
     def get_legal_moves_builds(self, color):
         """Returns all the legal moves for the given color.
         (1 for white, -1 for black)
@@ -53,7 +53,7 @@ class Board():
                     new_moves_builds.update(self.get_moves_for_square((x, y)))
         return list(new_moves_builds)
 
-    # SANTORINI: Done
+
     def has_legal_moves_builds(self, color):
         """
         This returns if a given player has legal moves to do or not
@@ -69,7 +69,7 @@ class Board():
                         return True
         return False
 
-    # SANTORINI: Done
+
     def get_moves_for_square(self, square):
         """
         Given a location as (x, y) ie: (row, col), this method checks where it is possible to move and build
@@ -102,7 +102,7 @@ class Board():
         board[x_move][y_move] = color * (board[x_move][y_move] + 1)
         return board
 
-    # SANTORINI: Done
+
     def execute_move_build(self, move, build, color):
         # Move
         x_move, y_move = move
@@ -113,14 +113,14 @@ class Board():
         x_build, y_build = build
         self[x_build][y_build] += 10
 
-    # SANTORINI: Done
+
     def _remove_color(self, color):
         for y in range(self.n):
             for x in range(self.n):
                 if self[x][y] in [i * color for i in [1, 11, 21, 31]]:
                     self[x][y] = (self[x][y] - color) * color
 
-    # SANTORINI: Done
+
     @staticmethod
     def _remove_color_any(board, color):
         for y in range(board.shape[1]):
@@ -129,7 +129,7 @@ class Board():
                     board[x][y] = (board[x][y] - color) * color
         return board
 
-    # SANTORINI: Done
+
     def _discover_move(self, origin, direction):
         """
         Returns the endpoint for a move, starting at the given origin,
@@ -148,7 +148,7 @@ class Board():
 
         return None
 
-    # SANTORINI: Done
+
     def _is_legal_move(self, origin, direction, color):
         """
         Takes as input an origin point (x, y), a direction and a color (player 1 or -1) and will
@@ -171,7 +171,7 @@ class Board():
                     return True
         return False
 
-    # SANTORINI: Done
+
     def _discover_build(self, origin, direction, board):
         """
         Returns the endpoint for a move, starting at the given origin,
@@ -193,7 +193,7 @@ class Board():
 
         return None
 
-    # SANTORINI: Done
+
     @staticmethod
     def _discover_build_any_board(board, origin, direction):
         """
@@ -216,7 +216,7 @@ class Board():
 
         return None
 
-    # SANTORINI: Done
+
     def _is_legal_build(self, x_sum, y_sum, color):
         """
         check if it if possible to build at a given place
@@ -231,7 +231,7 @@ class Board():
                 return True
         return False
 
-    # SANTORINI: Done
+
     @staticmethod
     def _is_legal_build_any_board(board, x_sum, y_sum, color):
         """

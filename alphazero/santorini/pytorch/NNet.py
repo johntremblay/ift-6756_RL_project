@@ -1,33 +1,21 @@
-import argparse
 import os
-import shutil
 import time
-import random
 import numpy as np
-import math
 import sys
-
 sys.path.append('../../')
 from utils import *
-# from pytorch_classification.utils import Bar, AverageMeter
 from NeuralNet import NeuralNet
-
-import argparse
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
-from torchvision import datasets, transforms
-
 from .SantoriniNNet import SantoriniNNet as onnet
 
 args = dotdict({
     'lr': 0.001,
     'dropout': 0.1,
-    'epochs': 20,
-    'batch_size': 512,
+    'epochs': 3,
+    'batch_size': 32,
     'cuda': torch.cuda.is_available(),
-    'num_channels': 512, #512 need 7.88 GB RAM free in GPU
+    'num_channels': 32,
 })
 
 
