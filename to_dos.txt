@@ -3,13 +3,11 @@
 # TODO: Changes the state representation to be 5x5x4 (board) and 5x5x1 (players)
 
 # TODO AS OF MARCH 20:
-- Pit to fix
-- Player to fix (ordre)
-- Logic to check (9 in arena sometimes)
-- SOmeone wins even though it was supposed to be the other (SantoriniGame)
-- Fix arena (qui qui recoit le nouveau Net et qui qui gagne)
-- COnfirm if action space is ok -> Maybe linked to invalid moves
-- Validate training by going in Pit if it beats random player
-
-
-- CLean-up code
+- Pit to fix (FM)
+- Player to fix (ordre) (FM)
+- Logic to check (9 in arena sometimes) (FM)
+- SOmeone wins even though it was supposed to be the other (SantoriniGame) (FM)
+- Fix arena (qui qui recoit le nouveau Net et qui qui gagne) (JT)
+- COnfirm if action space is ok -> Maybe linked to invalid moves (JT)
+- Validate training by going in Pit if it beats random player (JT)
+- CLean-up code (FM + JT)
